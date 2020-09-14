@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Enter Admission No. and View Payment</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <table id="payform">
+                            {% for field in form %}
+                            <tr>
+                                <td>{{field.label_tag}}</td>
+                                <td>{{field}}</td>
+                                <td>{{field.errors}}</td>
+                                <td>
+                                    <input type="submit" class="btn btn-success" value="Submit" id="submit">
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Search By Name and View Payment</h5>
+                    <form method='GET' action="">
+                        <input type="text" style="width: 15rem;" name="search" placeholder="Search name">
+                        <input type="submit" class="btn btn-success" value="Search">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    {% if name %}
+    <div class="row">
+        <div class="col-md-12">
+             <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Student List</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Admission Number</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in name %}
+                                    <tr>
+                                        <th>{{data.enquiry_id__student_name}}</th>
+                                        <th>{{data.admission_no}}</th>
+                                        <th><a href="{% url 'payview' data.enquiry_id %}" class="btn btn-primary fa fa-eye btn-circle"></a></th>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="text-right my-1">
+                            <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+                            <a href="{%url 'index'%}" class="btn btn-outline-primary">Back to Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

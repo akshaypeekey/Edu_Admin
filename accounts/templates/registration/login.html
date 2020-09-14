@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<img class="wave" src="{% static 'img/wave.png' %}">
+	<div class="container">
+		<div class="img">
+			<img src="{% static 'img/bg.png' %}">
+		</div>
+		<div class="login-content">
+			<form action="{% url 'login' %}" method="post">
+				<img src="{% static 'img/avatar.svg' %}">
+				<h2 class="title">Welcome</h2>
+					{% csrf_token %}
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<img class="icon1" src="{% static 'img/name.svg' %}">
+           		   </div>
+           		   <div class="div">
+					   {{form.username}}
+           		   </div>
+           		</div>
+           		<div class="input-div pass">
+           		   <div class="i">
+           		    	<img class="icon1" src="{% static 'img/key.svg' %}">
+           		   </div>
+           		   <div>
+					   <input class="form-control form-control-lg" type="text" placeholder="Password">
+                		{{ form.password }}
+            	   </div>
+            	</div>
+            	<input type="submit" class="btn" value="Login">
+				{% if form.errors %}
+				<div style="color: red;"><p>Incorrect Username or Password</p></div>
+				{% endif %}
+<!--				<a href="#">Forgot Password?</a>-->
+			</form>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

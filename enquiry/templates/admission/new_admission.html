@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Accordion -->
+                <a href="#collapseCardExample1" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample1">
+                    <h6 class="m-0 font-weight-bold text-primary">Add New Admission</h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="collapseCardExample1">
+                    <div class="card-body">
+                        <form method="post">
+                        {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="id_student_name"><strong>Student Name: </strong></label>
+                                        {{name}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="id_course"><strong>Course Name: </strong></label>
+                                        {{course}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="id_batch_code"><strong>Batch Code: </strong></label>
+                                        {{ batch_code }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="id_batch_code"></label>
+                                        {{ form.batch_code}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="id_enquiry_id"></label>
+                                        {{ form.enquiry_id}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_admission_number" class='control-label'>Admission Number</label>
+                                        {{ form.admission_no}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_course_fee" class='control-label'>Course Fee</label>
+                                        {{ form.course_fee}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="id_note">Note</label>
+                                        {{ form.notes}}
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-sm-12 text-right">
+                                    <input type="submit" class="btn btn-success" value="Submit" id="one"style="margin-top: 30px;">
+                                    <input type=button class="btn btn-outline-warning" style="margin-top: 30px;" value="Back" onClick="javascript:history.go(-1);">
+                                    <a href="{%url 'index'%}" class="btn btn-outline-primary ink-reaction" id="three"style="margin-top: 30px;">Back To Dashboard</a>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+{% endblock %}}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Accordion -->
+                <a href="#collapseCardExample1" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample1">
+                    <h6 class="m-0 font-weight-bold text-primary">Fee Payment</h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="collapseCardExample1">
+                    <div class="card-body">
+                        <form method="post">
+                        {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <div class="form-group">
+                                        <label for="id_admission_number"></label>
+                                        {{ form.admission_no}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="form-group">
+                                        <label for="id_enquiry_id"></label>
+                                        {{ form.enquiry_id}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="id_remaining">Remaining Fee</label>
+                                        <strong>{{ remaining }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_amount" class='control-label'>Amount</label>
+                                        {{ form.amount}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-right">
+                                <input type="submit" class="btn btn-success" value="Pay" id="one"style="margin-top: 30px; width: 100px;">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+
+{% endblock %}

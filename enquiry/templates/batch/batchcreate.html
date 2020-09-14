@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Accordion -->
+                <a href="#collapseCardExample1" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample1">
+                    <h6 class="m-0 font-weight-bold text-primary">Add New Batch</h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="collapseCardExample1">
+                    <div class="card-body">
+                        <form method="post">
+                        {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_batch_code" class='control-label'>Batch Code</label>
+                                        {{ form.batch_code}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_course" class='control-label'>Course</label>
+                                        {{ form.course}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_batch_date" class='control-label'>Batch Date</label>
+                                        {{ form.batch_date}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_batch_status" class='control-label'>Batch Status</label>
+                                        {{ form.batch_status}}
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-sm-12 text-right">
+                                    <input type="submit" class="btn btn-success" value="Create Batch" id="one"style="margin-top: 30px;">
+                                    <a href="" class="btn btn-danger" id="two"style="margin-top: 30px;">Cancel</a>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        <div class="card shadow mb-4">
+            <a href="#collapseCardExample2" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample2">
+                    <h6 class="m-0 font-weight-bold text-primary">All Batches</h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="collapseCardExample2">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Batch Code</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for batchview in batches %}
+                                <tr>
+                                    <td>{{batchview.id}}</td>
+                                    <td>{{batchview.batch_code}}</td>
+                                    <td>{{batchview.batch_date}}</td>
+                                    <td>{{batchview.get_batch_status_display}}</td>
+                                    <th><a href="{% url 'updatebatch' batchview.id %}" class="btn btn-warning fa fa-edit btn-circle"></a>
+                                    <a href="{% url 'deletebatch' batchview.id %}" class="btn btn-danger fa fa-window-close btn-circle"></a>
+                                    <a href="{% url 'report' batchview.id %}" class="btn btn-primary fa fa-file btn-circle"></a></th>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-right my-1">
+                        <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+                        <a href="{%url 'index'%}" class="btn btn-outline-primary">Back to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+</div>
+{%endblock%}

@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% block content %}
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">Total Enquires
+                      <span class="h5 ml-2 font-weight-bold text-gray-800">{{sum_enq}}</span></div>
+                      <table>
+                        {% for data in tot_enq %}
+                        <tr>
+                          <td>{{data.course__course_name}} = {{data.enq}}</td>
+                        </tr>
+                        {% endfor %}
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xl font-weight-bold text-success text-uppercase mb-1">Total Admission
+                      <span class="h5 ml-2 font-weight-bold text-gray-800" id="sum_adm">{{sum_adm}}</span></div>
+                      <table>
+                        {% for data in tot_adm %}
+                        <tr>
+                          <td>{{data.course__course_name}} = {{data.enq}}</td>
+                        </tr>
+                        {% endfor %}
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xl font-weight-bold text-info text-uppercase mb-1">Total Call Backs
+                      <span class="h5 ml-2 font-weight-bold text-gray-800" id="sum_call">{{sum_call}}</span></div>
+                      <table>
+                        {% for data in tot_call %}
+                        <tr>
+                          <td>{{data.course__course_name}} = {{data.enq}}</td>
+                        </tr>
+                        {% endfor %}
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xl font-weight-bold text-warning text-uppercase mb-1">Cancelled Enquires
+                      <span class="h5 ml-2 font-weight-bold text-gray-800" id="sum_can">{{sum_can}}</span></div>
+                      <table>
+                        {% for data in tot_can %}
+                        <tr>
+                          <td>{{data.course__course_name}} = {{data.enq}}</td>
+                        </tr>
+                        {% endfor %}
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- Collapsible Card Example -->
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card shadow mb-4">
+                <a href="#collapseCardExample1" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample1">
+                  <h6 class="m-0 font-weight-bold text-primary">Upcoming Batches</h6>
+                </a>
+                <div class="collapse hide" id="collapseCardExample1">
+                  <div class="card-body">
+                    <table>
+                      {% for data in ytb_batch %}
+                      <tr>
+                        <td class="py-2">{{data.batch_code__batch_code}} starts on  {{data.batch_code__batch_date}}<span class="ml-1"><a href="{%url 'report' data.batch_code__id %}" class="btn-sm rounded btn-info float-center">view</a></span></td>
+                      </tr>
+                      {% endfor %}
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="card shadow mb-4">
+                <a href="#collapseCardExample2" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample2">
+                  <h6 class="m-0 font-weight-bold text-primary">Ongoing Batches</h6>
+                </a>
+                <div class="collapse hide" id="collapseCardExample2">
+                  <div class="card-body">
+                    <table>
+                      {% for data in og_batch %}
+                      <tr>
+                        <td class="py-2">{{data.batch_code__batch_code}} started on  {{data.batch_code__batch_date}}<span class="ml-1"><a href="{%url 'report' data.batch_code__id %}" class="btn-sm rounded btn-info float-center">view</a></span></td>
+                      </tr>
+                      {% endfor %}
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="card shadow mb-4">
+                <a href="#collapseCardExample3" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample3">
+                  <h6 class="m-0 font-weight-bold text-primary">Completed Batches</h6>
+                </a>
+                <div class="collapse hide" id="collapseCardExample3">
+                  <div class="card-body">
+                    <table>
+                      {% for data in cd_batch %}
+                      <tr>
+                        <td class="py-2">{{data.batch_code__batch_code}} started on  {{data.batch_code__batch_date}}<span class="ml-1"><a href="{%url 'report' data.batch_code__id %}" class="btn-sm rounded btn-info float-center">view</a></span></td>
+                      </tr>
+                      {% endfor %}
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Area Chart -->
+            <div class="col-xl-12 col-lg-12">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                </div>
+                <div class="card-body ">
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="card mx-5 py-3 border-bottom-info">
+                        <div class="card-body text-center">
+                          <h3 class="mx-0 font-weight-bold text-primary">Total Revenue</h3>
+                          <h4 class="mx-0 font-weight-bold text-secondary fas fa-rupee-sign">{{total.total}}</h4>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="card mx-5 py-3 border-bottom-success">
+                        <div class="card-body text-center">
+                          <h3 class="mx-0 font-weight-bold text-success">Total Received</h3>
+                          <h4 class="mx-0 font-weight-bold text-secondary fas fa-rupee-sign">{{received.total}}</h4>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                       <div class="card mx-5 py-3 border-bottom-warning">
+                          <div class="card-body text-center">
+                            <h3 class="mx-0 font-weight-bold text-warning">Total Pending</h3>
+                            <h4 class="mx-0 font-weight-bold text-secondary fas fa-rupee-sign">{{pending}}</h4>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Content Row -->
+
+          <div class="row">
+            <!-- Bar Chart -->
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Revenue Chart</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <canvas id="myBarChart"></canvas>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Enquiry Chart</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </a>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                  </div>
+                  <div class="mt-4 text-center small">
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-success"></i> Admitted
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-info"></i> Call Back
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-warning"></i> Cancel
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% for data in month_sum %}
+            <div id='month'>
+              month={{data.m}}
+            </div>
+            <div id='total'>
+              total={{data.total}}
+            </div>
+
+        {% endfor %}
+
+{%endblock%}

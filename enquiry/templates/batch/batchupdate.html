@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Accordion -->
+                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                    <h6 class="m-0 font-weight-bold text-primary">Update Batch</h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="collapseCardExample">
+                    <div class="card-body">
+                        <form method="post">
+                        {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_batch_code" class='control-label'>Batch Code</label>
+                                        {{ form.batch_code}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_course" class='control-label'>Course</label>
+                                        {{ form.course}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_batch_date" class='control-label'>Batch Date</label>
+                                        {{ form.batch_date}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label for="id_batch_status" class='control-label'>Batch Status</label>
+                                        {{ form.batch_status}}
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-sm-12 text-right">
+                                    <input type="submit" class="btn btn-success" value="Update Batch" id="one">
+                                    <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+                                    <a href="{%url 'index'%}" class="btn btn-outline-primary ink-reaction" id="three">Back To Dashboard</a>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+{%endblock%}

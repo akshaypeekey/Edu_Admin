@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text">Enquires</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Course</th>
+                                <th>Batch</th>
+                                <th>Enquiry Date</th>
+                                <th>Counsellor</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for object in item %}
+                            <tr>
+                                <td>{{object.student_name}}</td>
+                                <td>{{object.course}}</td>
+                                <td>{{object.batch_code}}</td>
+                                <td>{{object.enquiry_date}}</td>
+                                <td>{{object.counsellor_name}}</td>
+                                <td>{{object.get_status_display}}</td>
+                                <td><a href="{% url 'viewinfo' object.enquiry_id%}" class="btn btn-primary fa fa-eye btn-circle"></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+                        <a href="{%url 'index'%}" class="btn btn-outline-primary ink-reaction">Back to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+{%endblock%}

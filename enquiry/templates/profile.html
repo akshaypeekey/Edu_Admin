@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+      <div class="card mb-4 shadow">
+          <div class="card-body">
+             <form class="form" role="form" action="" method="post"> {% csrf_token %}
+                 <header class="h2 text-uppercase font-weight-bold text-primary">Update Profile</header><hr>
+                 <div class="row">
+                     <div class="col-sm-6">
+                        <div class="form-group required">
+                            <label for="id_first_name" class='control-label'>First Name</label>
+                                {{ form.first_name}}
+                        </div>
+                     </div>
+                     <div class="col-sm-6">
+                        <div class="form-group required">
+                            <label for="id_last_name" class='control-label'>Last Name</label>
+                                {{ form.last_name}}
+                        </div>
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="col-sm-6">
+                        <div class="form-group required">
+                            <label for="id_user_name" class='control-label'>User Name</label>
+                                {{ form.username }}<br>
+                                {{ form.username.help_text }}<br>
+                                <span style="color: red;">{{ form.username.errors }}</span><br>
+                        </div>
+                     </div>
+                     <div class="col-sm-6">
+                        <div class="form-group required">
+                            <label for="id_email" class='control-label'>Email</label>
+                              {{ form.email}}<br>
+                              <span style="color: red;">{{ form.email.errors }}</span><br>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="col-sm-6">
+                          <div class="form-group required">
+                              <label for="id_password1" class='control-label'>Password</label>
+                                {{ form.password1}}<br>
+                                {{ form.password1.help_text }}<br>
+                                <span style="color: red;">{{ form.password1.errors }}</span><br>
+                          </div>
+                     </div>
+                     <div class="col-sm-6">
+                          <div class="form-group required">
+                              <label for="id_password2" class='control-label'>Confirm Password</label>
+                                {{ form.password2}}<br>
+                                {{ form.password2.help_text }}<br>
+                                <span style="color: red;">{{ form.password2.errors }}</span><br>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-sm-12 text-right">
+                     <button type="submit" class="btn btn-success ink-reaction">Update</button>
+                     <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+                     <a href="{%url 'index'%}" class="btn btn-outline-primary ink-reaction">Back to Dashboard</a>
+                 </div>
+             </form>
+          </div>
+      </div>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-center">Search Followups by Date</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <form method="post">
+                    {% csrf_token %}
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <tr>
+                                <td>Follow Up Date</td>
+                                <td>{{form.followup_date}}</td>
+                                <td><button type="submit" class="btn btn-success btn-circle"><i class="fas fa-search"></i></button></td>
+                            </tr>
+                        </table>
+                        <div class="text-right">
+                            <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+                            <a href="{%url 'index'%}" class="btn btn-outline-primary ink-reaction">Back to Dashboard</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+{%endblock%}

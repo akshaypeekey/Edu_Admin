@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+{% if msg %}
+<div class="card">
+    <div class="card-body">
+        <h3 align="center" class="font-weight-bold text-danger">{% for data in data %}{{msg}}{{data.counsellor_name}}{% endfor %}</h3>
+    </div>
+    <div class="text-right my-1">
+        <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+        <a href="{%url 'index'%}" class="btn btn-outline-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endif %}
+{% if qs %}
+{% for counsellor in data %}
+<h3 align="center" class="font-weight-bold text-primary"> Counsellor Report of {{counsellor.counsellor_name}}</h3>
+
+    <div class="row my-5">
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">Total Enquires
+                    <span class="h5 font-weight-bold text-gray-800 float-right">{{sum_enq}}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xl font-weight-bold text-success text-uppercase mb-1">Total Admissions
+                    <span class="h5 font-weight-bold text-gray-800 float-right" id="sum_adm">{{sum_adm}}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xl font-weight-bold text-info text-uppercase mb-1">Total Call Backs
+                    <span class="h5 font-weight-bold text-gray-800 float-right" id="sum_call">{{sum_call}}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xl font-weight-bold text-warning text-uppercase mb-1">Total Cancellation
+                    <span class="h5 font-weight-bold text-gray-800 float-right" id="sum_can">{{sum_can}}</span></div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+<hr>
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="card-group mb-3 pb-4 card-header d-flex flex-row align-items-center justify-content-between text-center">
+
+                <div class="mx-1">
+                    <div class="card border-primary" style="max-width: 18rem;">
+                      <div class="card-body text-primary">
+                        <h4 class="card-title font-weight-bold">Total Revenue</h4>
+                        <h5 class="card-text font-weight-bold text-secondary fas fa-rupee-sign">{{total.total}}</h5>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="mx-1">
+                    <div class="card border-success" style="max-width: 18rem;">
+                      <div class="card-body text-success">
+                        <h4 class="card-title font-weight-bold">Total Received</h4>
+                        <h5 class="card-text font-weight-bold text-secondary fas fa-rupee-sign">{{received.total}}</h5>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="mx-1">
+                    <div class="card border-warning" style="max-width: 18rem;">
+                      <div class="card-body text-warning">
+                        <h4 class="card-title font-weight-bold">Total Pending</h4>
+                        <h5 class="card-text font-weight-bold text-secondary fas fa-rupee-sign">{{pending}}</h5>
+                      </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">All Enquires Attended By {{counsellor.counsellor_name}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Batch Code</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in qs %}
+                                    <tr>
+                                        <td>{{data.student_name}}</td>
+                                        <td>{{data.course}}</td>
+                                        <td>{{data.batch_code}}</td>
+                                        <td>{{data.get_status_display}}</td>
+                                        <td><a href="{% url 'viewenq' data.enquiry_id %}" class="btn btn-primary fa fa-eye btn-circle"></a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="text-right my-1">
+                            <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+                            <a href="{%url 'index'%}" class="btn btn-outline-primary">Back to Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+{% endfor %}
+{% endif %}
+{% endblock %}

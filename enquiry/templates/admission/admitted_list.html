@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class=" h3 mb-2 text-gray-800">All Admission</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">All Admission</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Admission No.</th>
+                            <th>Name</th>
+                            <th>Contact Number</th>
+                            <th>Course</th>
+                            <th>Batch</th>
+                            <th>Course Fee</th>
+                            <th>Admission Date</th>
+                            <th>Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in admit_list %}
+                            <tr>
+                                <th>{{data.admission_no}}</th>
+                                <th>{{data.enquiry_id__student_name}}</th>
+                                <th>{{data.enquiry_id__contact}}</th>
+                                <th>{{data.enquiry_id__course__course_name}}</th>
+                                <th>{{data.batch_code__batch_code}}</th>
+                                <th>{{data.course_fee}}</th>
+                                <th>{{data.date}}</th>
+                                <td><a href="{% url 'payview' data.enquiry_id__enquiry_id %}" class="btn btn-primary fa fa-eye btn-circle"></a>
+                                <a href="{% url 'payment' data.enquiry_id__enquiry_id %}" class="btn btn-primary fa fa-money-bill-alt btn-circle"></a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="text-right my-1">
+                    <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+                    <a href="{%url 'index'%}" class="btn btn-outline-primary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

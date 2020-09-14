@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if msg %}
+<div class="card">
+    <div class="card-body">
+        <h3 align="center" class="font-weight-bold text-danger">{{msg}} ({% now "d-M-Y" %})</h3>
+    </div>
+    <div class="text-right my-1">
+        <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+        <a href="{%url 'index'%}" class="btn btn-outline-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endif %}
+{% if enquiries %}
+{% for data in enquiries %}
+<h1 class=" h3 mb-2 text-gray-800">Today's Folloups</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Followups on {% now "d-M-Y" %} </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact Number</th>
+                            <th>Course</th>
+                            <th>Batch</th>
+                            <th>Enquiry Date</th>
+                            <th>Counsellor</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                            <tr>
+                                <th>{{data.student_name}}</th>
+                                <th>{{data.contact}}</th>
+                                <th>{{data.course}}</th>
+                                <th>{{data.batch_code}}</th>
+                                <th>{{data.enquiry_date}}</th>
+                                <th>{{data.counsellor_name}}</th>
+                                 <th>{{data.get_status_display}}</th>
+                                <th><a href="{% url 'followupdetail' data.enquiry_id %}" class="btn btn-primary fa fa-eye btn-circle"></a>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <input type=button class="btn btn-outline-warning" value="Back" onClick="javascript:history.go(-1);">
+                    <a href="{%url 'index'%}" class="btn btn-outline-primary ink-reaction">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{%endblock%}
