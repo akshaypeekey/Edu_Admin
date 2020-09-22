@@ -2008,7 +2008,7 @@ select.form-control[size], select.form-control[multiple] {
 }
 
 textarea.form-control {
-  height: auto;
+  height: 125px;
 }
 
 .form-group {

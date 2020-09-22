@@ -9,7 +9,7 @@ class EnquiryForm(ModelForm):
     class Meta:
         model = Enquiry
         fields = ['student_name', 'address', 'qualification', 'college', 'course', 'batch_code', 'contact',
-                  'email', 'enquiry_date', 'followup_date', 'status', 'counsellor_name']
+                  'email', 'enquiry_date', 'followup_date', 'status', 'counsellor_name', 'notes']
         widgets = {
             'student_name': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control'}),
@@ -23,6 +23,7 @@ class EnquiryForm(ModelForm):
             'followup_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'counsellor_name': forms.Select(attrs={'class': 'form-control'}),
+            'notes': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
         def clean(self):
@@ -32,7 +33,7 @@ class EnquiryForm(ModelForm):
 class EnquiryUpdateForm(ModelForm):
     class Meta:
         model = Enquiry
-        fields = ['student_name', 'address', 'qualification', 'college', 'course', 'batch_code', 'contact', 'email', 'enquiry_date', 'followup_date', 'status', 'counsellor_name']
+        fields = ['student_name', 'address', 'qualification', 'college', 'course', 'batch_code', 'contact', 'email', 'enquiry_date', 'followup_date', 'status', 'counsellor_name', 'notes']
         widgets = {
             'student_name': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control'}),
@@ -46,6 +47,7 @@ class EnquiryUpdateForm(ModelForm):
             'followup_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'counsellor_name': forms.Select(attrs={'class': 'form-control'}),
+            'notes': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
     def clean(self):
