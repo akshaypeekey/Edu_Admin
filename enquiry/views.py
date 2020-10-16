@@ -167,7 +167,7 @@ class AdmitionList(LoginRequiredMixin, ListView):
         qs = Payment.objects.all().values('admission_no__admission_no', 'enquiry_id__student_name',
                                           'enquiry_id__course__course_name', 'enquiry_id__batch_code__batch_code',
                                           'enquiry_id__contact', 'admission_no__date', 'amount', 'enquiry_id',
-                                          'enquiry_id__counsellor_name__counsellor_name')
+                                          'enquiry_id__counsellor_name__counsellor_name').order_by('-payment_date')
         context = {'admit_list': qs}
         return render(request, self.template_name, context)
 
@@ -757,7 +757,7 @@ class PaymentInfo(LoginRequiredMixin, TemplateView):
             return render(request, self.template_name, context)
 
 
-@method_decorator(login_required)
+@login_required
 def signup(request):
     if request.method == 'POST':
         form = UserRegForm(request.POST)
@@ -772,7 +772,7 @@ def signup(request):
     return render(request, 'user_reg.html', {'form': form})
 
 
-@method_decorator(login_required)
+@login_required
 def edit_profile(request):
     if request.method == 'POST':
         form = UserRegForm(request.POST, instance=request.user)

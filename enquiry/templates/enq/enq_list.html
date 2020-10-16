@@ -12,9 +12,9 @@
                         <tr>
                             <th>Name</th>
                             <th>Contact Number</th>
-                            <th>Qualification</th>
                             <th>Course</th>
                             <th>Batch</th>
+                            <th>Enquiry Date</th>
                             <th>Status</th>
                             <th>Actions</th>
 
@@ -25,9 +25,9 @@
                             <tr>
                                 <th>{{data.student_name}}</th>
                                 <th>{{data.contact}}</th>
-                                <th>{{data.qualification}}</th>
                                 <th>{{data.course}}</th>
                                 <th>{{data.batch_code}}</th>
+                                <th>{{data.enquiry_date}}</th>
                                 <th>{{data.get_status_display}}</th>
                                 <th><a href="{% url 'viewenq' data.enquiry_id %}" class="btn btn-primary fa fa-eye btn-circle"></a>
                                 <a href="{% url 'updateenq' data.enquiry_id %}" class="btn btn-warning fa fa-edit btn-circle"></a>

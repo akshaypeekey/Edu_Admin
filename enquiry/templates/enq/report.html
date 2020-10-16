@@ -73,45 +73,48 @@
 <hr>
 
     <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card-group mb-3 pb-4 card-header d-flex flex-row align-items-center justify-content-between text-center">
 
-                <div class="mx-1">
-                    <div class="card border-primary" style="max-width: 18rem;">
-                      <div class="card-body text-primary">
-                        <h4 class="card-title font-weight-bold">Total Revenue</h4>
-                        <h5 class="card-text font-weight-bold text-secondary fas fa-rupee-sign">{{total.total}}</h5>
-                      </div>
+                <div class="col-md-4">
+                    <div class="mx-1">
+                        <div class="card border-primary" style="max-width: 18rem;">
+                          <div class="card-body text-primary">
+                            <h4 class="card-title font-weight-bold">Total Revenue</h4>
+                            <h5 class="card-text font-weight-bold text-secondary fas fa-rupee-sign">{{total.total}}</h5>
+                          </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="mx-1">
-                    <div class="card border-success" style="max-width: 18rem;">
-                      <div class="card-body text-success">
-                        <h4 class="card-title font-weight-bold">Total Received</h4>
-                        <h5 class="card-text font-weight-bold text-secondary fas fa-rupee-sign">{{received.total}}</h5>
-                      </div>
+                <div class="col-md-4">
+                    <div class="mx-1">
+                        <div class="card border-success" style="max-width: 18rem;">
+                          <div class="card-body text-success">
+                            <h4 class="card-title font-weight-bold">Total Received</h4>
+                            <h5 class="card-text font-weight-bold text-secondary fas fa-rupee-sign">{{received.total}}</h5>
+                          </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="mx-1">
-                    <div class="card border-warning" style="max-width: 18rem;">
-                      <div class="card-body text-warning">
-                        <h4 class="card-title font-weight-bold">Total Pending</h4>
-                        <h5 class="card-text font-weight-bold text-secondary fas fa-rupee-sign">{{pending}}</h5>
-                      </div>
+                <div class="col-md-4">
+                    <div class="mx-1">
+                        <div class="card border-warning" style="max-width: 18rem;">
+                          <div class="card-body text-warning">
+                            <h4 class="card-title font-weight-bold">Total Pending</h4>
+                            <h5 class="card-text font-weight-bold text-secondary fas fa-rupee-sign">{{pending}}</h5>
+                          </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
-        <div class="col-md-1"></div>
     </div>
 
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">All Enquires of {{data.batch_code__batch_code}}</h6>
@@ -148,7 +151,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-1"></div>
     </div>
 {% endfor %}
 {% endblock %}

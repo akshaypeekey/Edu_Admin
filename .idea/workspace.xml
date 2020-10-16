@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="880c67d9-0d0e-41f3-b4d1-19966e255c9f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/enquiry/migrations/0010_auto_20201016_1349.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enquiry/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enquiry/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enquiry/templates/counsellor/counsellorreport.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/counsellor/counsellorreport.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enquiry/templates/enq/enq_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/enq/enq_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enquiry/templates/enq/enq_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/enq/enq_update.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enquiry/templates/enq/enq_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/enq/enq_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enquiry/templates/payments/paymentview.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/payments/paymentview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enquiry/templates/enq/enq_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/enq/enq_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enquiry/templates/enq/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/enq/report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enquiry/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
