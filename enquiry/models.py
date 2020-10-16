@@ -39,13 +39,13 @@ class Batch(models.Model):
 class Enquiry(models.Model):
     enquiry_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     student_name = models.CharField(max_length=30)
-    address = models.TextField()
-    qualification = models.CharField(max_length=20)
-    college = models.CharField(max_length=30)
+    address = models.TextField(null='True', blank='True')
+    qualification = models.CharField(max_length=20, null='True', blank='True')
+    college = models.CharField(max_length=30, null='True', blank='True')
     course = models.ForeignKey(Course,on_delete=models.CASCADE)
     batch_code = models.ForeignKey(Batch,on_delete=models.CASCADE)
     contact = models.IntegerField()
-    email = models.EmailField(unique=True)
+    email = models.EmailField(null='True', blank='True')
     enquiry_date = models.DateField(default=date.today())
     followup_date = models.DateField()
     action = (
@@ -56,6 +56,7 @@ class Enquiry(models.Model):
     status = models.CharField(max_length=20, choices=action)
     counsellor_name = models.ForeignKey(Counsellor,on_delete=models.CASCADE)
     notes = models.TextField(null='True', blank='True')
+    source = models.TextField(null='True', blank='True')
 
     def __str__(self):
         return str(self.enquiry_id)

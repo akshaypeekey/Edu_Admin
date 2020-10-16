@@ -2,46 +2,40 @@
 {% block content %}
    <div class="card-body">
 
-       <form class="form" role="form" action="" method="post" id="EnquiryForm"> {% csrf_token %}
-           <header class="h2 text-uppercase">Add Enquiry</header>
+       <form class="form" role="form" action="" method="post"> {% csrf_token %}
+           <header class="h2 text-uppercase">Update Enquiry</header>
            <div class="row">
                <div class="col-sm-6">
                    <div class="form-group required">
-                       <label for="id_student_name" class='control-label'>Student Name</label>
+                       <label class='control-label'>Student Name</label>
                        {{ form.student_name}}
                    </div>
+                   <label class='control-label'>Address</label>
+                   {{ form.address}}
                    <div class="form-group required">
-                       <label for="id_address" class='control-label'>Address</label>
-                       {{ form.address}}
-                   </div>
-                   <div class="form-group required">
-                       <label for="id_contact" class='control-label'>Contact Number</label>
+                       <label class='control-label'>Contact Number</label>
                        {{ form.contact}}
                    </div>
-                   <div class="form-group required">
-                       <label for="id_email" class='control-label'>Email</label>
-                       {{ form.email}}
-                   </div>
+                   <label class='control-label'>Email</label>
+                   {{ form.email}}
                </div>
                <div class="col-sm-6">
-                   <div class="form-group required">
-                       <label for="id_college" class='control-label'>College Name</label>
-                       {{ form.college}}
-                   </div>
-                   <div class="form-group required">
-                       <label for="id_qualification" class='control-label'>Qualification</label>
-                       {{ form.qualification}}
-                   </div>
+                   <label class='control-label'>College Name</label>
+                   {{ form.college}}
+                   <br>
+                   <label class='control-label'>Qualification</label>
+                   {{ form.qualification}}
+
                    <div class="row">
                        <div class="col-sm-6">
                            <div class="form-group required">
-                               <label for="id_course" class='control-label'>Select Course</label>
+                               <label class='control-label'>Select Course</label>
                                {{ form.course}}
                            </div>
                        </div>
                        <div class="col-sm-6">
                            <div class="form-group required">
-                               <label for="id_batch_code" class='control-label'>Select Batch</label>
+                               <label class='control-label'>Select Batch</label>
                                {{ form.batch_code}}
                            </div>
                        </div>
@@ -49,14 +43,14 @@
                    <div class="row">
                        <div class="col-sm-6">
                            <div class="form-group required">
-                               <label for="id_enquiry_date" class='control-label'>Enquiry Date</label>
+                               <label class='control-label'>Enquiry Date</label>
                                <br>
                                {{ form.enquiry_date}}
                            </div>
                        </div>
                        <div class="col-sm-6">
                            <div class="form-group required">
-                               <label for="id_followup_date" class='control-label'>Followup Date</label>
+                               <label class='control-label'>Followup Date</label>
                                <br>
                                {{ form.followup_date}}
                            </div>
@@ -65,13 +59,13 @@
                    <div class="row">
                        <div class="col-sm-6">
                            <div class="form-group required">
-                               <label for="id_status" class='control-label'>Status</label>
+                               <label class='control-label'>Status</label>
                                {{ form.status}}
                            </div>
                        </div>
                        <div class="col-sm-6">
                            <div class="form-group required">
-                               <label for="id_counsellor_name" class='control-label'>Counsellor Name</label>
+                               <label class='control-label'>Counsellor Name</label>
                                {{ form.counsellor_name}}
                            </div>
                        </div>
@@ -79,10 +73,16 @@
                </div>
            </div>
            <div class="row">
-               <div class="col-sm-12">
+               <div class="col-sm-6">
                    <div class="form-group">
-                       <label for="id_note">Note</label>
+                       <label>Note</label>
                        {{ form.notes}}
+                   </div>
+               </div>
+               <div class="col-sm-6">
+                   <div class="form-group">
+                       <label>Source</label>
+                       {{ form.source}}
                    </div>
                </div>
            </div>
@@ -98,6 +98,4 @@
            </div>
        </form>
    </div>
-
-
 {%endblock%}

@@ -1,10 +1,10 @@
 from urllib import request
 
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractMonth
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
@@ -14,15 +14,14 @@ from django.utils.decorators import method_decorator
 from .models import Enquiry
 from .forms import *
 # Create your views here.
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
+from django.views.generic import *
 from datetime import date
 
 
-class Index(TemplateView):
+class Index(LoginRequiredMixin, TemplateView):
     model = Enquiry
     template_name = "index.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         from django.db.models import Count, Sum
         ytb_batch = Enquiry.objects.filter(batch_code__batch_status='1').values('batch_code__batch_code',
@@ -50,7 +49,6 @@ class Index(TemplateView):
         total = Admission.objects.all().aggregate(total=Sum('course_fee'))
         received = Payment.objects.all().aggregate(total=Sum('amount'))
 
-
         received_values = received.values()
         values_list = list(received_values)
         received_value = (values_list[0])
@@ -66,10 +64,10 @@ class Index(TemplateView):
         else:
             pending = (int(total_value) - int(received_value))
 
-
         # Chart
 
-        month_sum = (Payment.objects.annotate(m=ExtractMonth('payment_date')).values('m').annotate(total=Sum('amount')).order_by())
+        month_sum = (Payment.objects.annotate(m=ExtractMonth('payment_date')).values('m').annotate(
+            total=Sum('amount')).order_by())
         # print(month_sum)
 
         context = {'ytb_batch': ytb_batch, 'og_batch': og_batch, 'cd_batch': cd_batch, 'tot_enq': tot_enq,
@@ -80,7 +78,7 @@ class Index(TemplateView):
         return render(request, self.template_name, context)
 
 
-class ReportUpdate(TemplateView):
+class ReportUpdate(LoginRequiredMixin, TemplateView):
     model = Enquiry
     template_name = "enq/report.html"
 
@@ -96,7 +94,7 @@ class ReportUpdate(TemplateView):
         sum_can = Enquiry.objects.filter(batch_code=id, status='3').count()
 
         enq = Enquiry.objects.filter(batch_code=id).all()
-        print(enq)
+
         total = Admission.objects.filter(batch_code=id).aggregate(total=Sum('course_fee'))
         received = Payment.objects.filter(admission_no__batch_code=id).aggregate(total=Sum('amount'))
 
@@ -126,6 +124,7 @@ class ReportUpdate(TemplateView):
         return render(request, self.template_name, context)
 
 
+@login_required
 def createenq(request):
     if request.method == "POST":
         form = EnquiryForm(request.POST)
@@ -135,8 +134,9 @@ def createenq(request):
             data.save()
             status = form.cleaned_data['status']
             if status == '2':
-                messages.success(request, 'Enquiry successfully created. Please complete the Admission Process', 'alert-success')
-                return redirect('newadmission', pk=enquiry_id,)
+                messages.success(request, 'Enquiry successfully created. Please complete the Admission Process',
+                                 'alert-success')
+                return redirect('newadmission', pk=enquiry_id, )
             else:
                 messages.success(request, 'Enquiry successfully created.', 'alert-success')
                 return redirect('listenq')
@@ -154,12 +154,12 @@ def createenq(request):
         return render(request, template_name, context)
 
 
-class EnquiryList(ListView):
+class EnquiryList(LoginRequiredMixin, ListView):
     model = Enquiry
     template_name = "enq/enq_list.html"
 
 
-class AdmitionList(ListView):
+class AdmitionList(LoginRequiredMixin, ListView):
     model = Payment
     template_name = "admission/admition_list.html"
 
@@ -172,7 +172,7 @@ class AdmitionList(ListView):
         return render(request, self.template_name, context)
 
 
-class AdmittedList(ListView):
+class AdmittedList(LoginRequiredMixin, ListView):
     model = Admission
     template_name = "admission/admitted_list.html"
 
@@ -185,12 +185,13 @@ class AdmittedList(ListView):
         return render(request, self.template_name, context)
 
 
-class ViewEnquiry(DetailView):
+class ViewEnquiry(LoginRequiredMixin, DetailView):
     model = Enquiry
     template_name = "enq/enq_view.html"
     context_object_name = "details"
 
 
+@login_required
 def updateenq(request, pk):
     enq = Enquiry.objects.get(enquiry_id=pk)
     form = EnquiryUpdateForm(instance=enq)
@@ -209,7 +210,8 @@ def updateenq(request, pk):
                     messages.success(request, 'Enquiry Details Updated.', 'alert-success')
                     return redirect('listadt')
                 else:
-                    messages.success(request, 'Enquiry Details Updated. Please Complete The Admission Process', 'alert-success')
+                    messages.success(request, 'Enquiry Details Updated. Please Complete The Admission Process',
+                                     'alert-success')
                     return redirect('newadmission', pk=enquiry_id)
             else:
                 messages.success(request, 'Enquiry Details Updated.', 'alert-success')
@@ -220,17 +222,16 @@ def updateenq(request, pk):
     return render(request, template_name, context)
 
 
-class DeleteEnquiry(DeleteView):
+class DeleteEnquiry(LoginRequiredMixin, DeleteView):
     model = Enquiry
     template_name = "enq/enq_delete.html"
     success_url = reverse_lazy('listenq')
 
 
-class FollowUp(TemplateView):
+class FollowUp(LoginRequiredMixin, TemplateView):
     model = Enquiry
     template_name = "enq/enq-followups.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         enquiries = Enquiry.objects.filter(followup_date=date.today(), status='1')
         if enquiries:
@@ -242,12 +243,11 @@ class FollowUp(TemplateView):
         return render(request, self.template_name, context)
 
 
-class FollowUpDetail(TemplateView):
+class FollowUpDetail(LoginRequiredMixin, TemplateView):
     model = Enquiry
     form_class = EnquiryUpdateForm
     template_name = "enq/followupdetail.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         id = self.kwargs.get('pk')
 
@@ -256,7 +256,6 @@ class FollowUpDetail(TemplateView):
         context = {'form': form, 'id': id}
         return render(request, self.template_name, context)
 
-    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         id = self.kwargs.get('pk')
         qs = Enquiry.objects.get(enquiry_id=id)
@@ -276,18 +275,16 @@ class FollowUpDetail(TemplateView):
             return render(request, self.template_name, context)
 
 
-class ViewFollowUp(TemplateView):
+class ViewFollowUp(LoginRequiredMixin, TemplateView):
     model = Enquiry
     form_class = FollowUpViewForm
     template_name = "enq/viewfollowupsearch.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         form = self.form_class
         context = {'form': form}
         return render(request, self.template_name, context)
 
-    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -309,11 +306,10 @@ class ViewFollowUp(TemplateView):
             return render(request, self.template_name, context)
 
 
-class StudentInfoFollow(TemplateView):
+class StudentInfoFollow(LoginRequiredMixin, TemplateView):
     model = Enquiry
     template_name = "enq/studentinfo_followup.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         id = self.kwargs.get('pk')
         qs = Enquiry.objects.filter(enquiry_id=id)
@@ -321,19 +317,17 @@ class StudentInfoFollow(TemplateView):
         return render(request, self.template_name, context)
 
 
-class CounsellorCreation(TemplateView):
+class CounsellorCreation(LoginRequiredMixin, TemplateView):
     model = Counsellor
     form_class = CounsellorCreateForm
     template_name = "counsellor/counsellorcreation.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         form = self.form_class
         counsellors = Counsellor.objects.all()
         context = {'form': form, 'counsellors': counsellors}
         return render(request, self.template_name, context)
 
-    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -348,13 +342,13 @@ class CounsellorCreation(TemplateView):
             return render(request, self.template_name, context)
 
 
-class DeleteCounsellor(DeleteView):
+class DeleteCounsellor(LoginRequiredMixin, DeleteView):
     model = Counsellor
     template_name = "counsellor/counsellordelete.html"
     success_url = reverse_lazy('counselloradd')
 
 
-class CounsellorReport(TemplateView):
+class CounsellorReport(LoginRequiredMixin, TemplateView):
     model = Counsellor
     template_name = "counsellor/counsellorreport.html"
 
@@ -370,7 +364,6 @@ class CounsellorReport(TemplateView):
 
         total = Admission.objects.filter(enquiry_id__counsellor_name=id).aggregate(total=Sum('course_fee'))
         received = Payment.objects.filter(enquiry_id__counsellor_name=id).aggregate(total=Sum('amount'))
-
 
         received_values = received.values()
         values_list = list(received_values)
@@ -391,26 +384,26 @@ class CounsellorReport(TemplateView):
             msg = ''
 
         qs = Enquiry.objects.filter(counsellor_name=id).all()
+
         context = {'data': data, 'sum_enq': sum_enq, 'sum_adm': sum_adm, 'sum_call': sum_call, 'sum_can': sum_can,
                    'total': total, 'received': received, 'pending': pending, 'msg': msg, 'qs': qs}
 
         return render(request, self.template_name, context)
 
+
 # Course creation
 
-class CourseCreation(TemplateView):
+class CourseCreation(LoginRequiredMixin, TemplateView):
     model = Course
     form_class = CourseForm
     template_name = "course/coursecreation.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         form = self.form_class
         courses = Course.objects.all()
         context = {'form': form, 'courses': courses}
         return render(request, self.template_name, context)
 
-    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -428,23 +421,21 @@ class CourseCreation(TemplateView):
             return render(request, self.template_name, context)
 
 
-class ViewCourse(TemplateView):
+class ViewCourse(LoginRequiredMixin, TemplateView):
     model = Course
     template_name = "course/viewcourse.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         qs = Course.objects.all()
         context = {'courselist': qs}
         return render(request, self.template_name, context)
 
 
-class CourseUpdation(TemplateView):
+class CourseUpdation(LoginRequiredMixin, TemplateView):
     model = Course
     form_class = CourseUpdateForm
     template_name = "course/courseupdate.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         id = self.kwargs.get('pk')
         qs = Course.objects.get(id=id)
@@ -452,7 +443,6 @@ class CourseUpdation(TemplateView):
         context = {'form': form}
         return render(request, self.template_name, context)
 
-    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         id = self.kwargs.get('pk')
         qs = Course.objects.get(id=id)
@@ -472,18 +462,17 @@ class CourseUpdation(TemplateView):
             return render(request, self.template_name, context)
 
 
-class CourseDelete(DeleteView):
+class CourseDelete(LoginRequiredMixin, DeleteView):
     model = Course
     template_name = "course/coursedelete.html"
     success_url = reverse_lazy('createcourse')
 
 
-class BatchCreation(TemplateView):
+class BatchCreation(LoginRequiredMixin, TemplateView):
     model = Batch
     template_name = "batch/batchcreate.html"
     form_class = BatchForm
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         form = self.form_class
         batches = Batch.objects.all()
@@ -492,7 +481,6 @@ class BatchCreation(TemplateView):
         context['batches'] = batches
         return render(request, self.template_name, context)
 
-    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -511,23 +499,21 @@ class BatchCreation(TemplateView):
             return render(request, self.template_name, context)
 
 
-class BatchView(TemplateView):
+class BatchView(LoginRequiredMixin, TemplateView):
     model = Batch
     template_name = "batch/batchview.html"
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         qs = Batch.objects.all()
         context = {'batch': qs}
         return render(request, self.template_name, context)
 
 
-class BatchUpdate(TemplateView):
+class BatchUpdate(LoginRequiredMixin, TemplateView):
     model = Batch
     template_name = "batch/batchupdate.html"
     form_class = BatchUpdateForm
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         b_id = self.kwargs.get('pk')
         qs = Batch.objects.get(id=b_id)
@@ -536,7 +522,6 @@ class BatchUpdate(TemplateView):
         context['form'] = form
         return render(request, self.template_name, context)
 
-    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         b_id = self.kwargs.get('pk')
         qs = Batch.objects.get(id=b_id)
@@ -557,13 +542,13 @@ class BatchUpdate(TemplateView):
             return render(request, self.template_name, context)
 
 
-class BatchDelete(DeleteView):
+class BatchDelete(LoginRequiredMixin, DeleteView):
     model = Batch
     template_name = "batch/batchdelete.html"
     success_url = reverse_lazy('createbatch')
 
 
-class NewAdmission(TemplateView):
+class NewAdmission(LoginRequiredMixin, TemplateView):
     model = Admission
     template_name = "admission/new_admission.html"
     form_class = NewAdmissionForm
@@ -608,7 +593,7 @@ class NewAdmission(TemplateView):
             return render(request, self.template_name, context)
 
 
-class StudentPayment(TemplateView):
+class StudentPayment(LoginRequiredMixin, TemplateView):
     model = Payment
     template_name = "admission/payment.html"
     form_class = PaymentForm
@@ -647,7 +632,7 @@ class StudentPayment(TemplateView):
             return render(request, self.template_name, context)
 
 
-class StdPayment(TemplateView):
+class StdPayment(LoginRequiredMixin, TemplateView):
     model = Admission
     template_name = "payments/paymentform.html"
     form_class = StudentPayForm
@@ -656,19 +641,21 @@ class StdPayment(TemplateView):
         if 'search' in request.GET:
             form = self.form_class
             search_term = request.GET['search']
-            name = Admission.objects.filter(enquiry_id__student_name=search_term).values('enquiry_id__student_name','admission_no','enquiry_id')
+            name = Admission.objects.filter(enquiry_id__student_name=search_term).values('enquiry_id__student_name',
+                                                                                         'admission_no', 'enquiry_id')
             if not name:
                 messages.success(request, 'No Student Found.', 'alert-danger')
                 context = {'form': form, 'name': name, 'search-term': search_term}
                 return render(request, self.template_name, context)
             else:
-                context = {'form': form, 'name': name, 'search-term': search_term }
+                context = {'form': form, 'name': name, 'search-term': search_term}
                 return render(request, self.template_name, context)
         else:
             form = self.form_class
             context = {}
             context['form'] = form
             return render(request, self.template_name, context)
+
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -690,7 +677,7 @@ class StdPayment(TemplateView):
             return render(request, self.template_name, context)
 
 
-class PaymentView(TemplateView):
+class PaymentView(LoginRequiredMixin, TemplateView):
     model = Payment
     template_name = "payments/paymentview.html"
 
@@ -704,6 +691,7 @@ class PaymentView(TemplateView):
         qs3 = Enquiry.objects.get(enquiry_id=id)
         name = qs3.student_name
         fees = qs2.course_fee
+        note = qs2.notes
         if (qs1['total'] == None):
             remaining = fees
             msg = "Initial Payment Not Payed"
@@ -721,10 +709,11 @@ class PaymentView(TemplateView):
         context['rem_fees'] = remaining
         context['msg'] = msg
         context['info'] = qs2
+        context['note'] = note
         return render(request, self.template_name, context)
 
 
-class PaymentInfo(TemplateView):
+class PaymentInfo(LoginRequiredMixin, TemplateView):
     model = Admission
     template_name = "payments/paymentinfo.html"
     form_class = StudentPayForm
@@ -733,6 +722,7 @@ class PaymentInfo(TemplateView):
         if 'search' in request.GET:
             form = self.form_class
             search_term = request.GET['search']
+
             name = Admission.objects.filter(enquiry_id__student_name=search_term).values('enquiry_id__student_name',
                                                                                          'admission_no', 'enquiry_id')
             if not name:
@@ -767,6 +757,7 @@ class PaymentInfo(TemplateView):
             return render(request, self.template_name, context)
 
 
+@method_decorator(login_required)
 def signup(request):
     if request.method == 'POST':
         form = UserRegForm(request.POST)
@@ -781,9 +772,10 @@ def signup(request):
     return render(request, 'user_reg.html', {'form': form})
 
 
+@method_decorator(login_required)
 def edit_profile(request):
     if request.method == 'POST':
-        form = UserRegForm(request.POST,  instance=request.user)
+        form = UserRegForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile Successfully Updated', 'alert-success')
@@ -793,3 +785,4 @@ def edit_profile(request):
     else:
         form = UserRegForm(instance=request.user)
     return render(request, 'profile.html', {'form': form})
+

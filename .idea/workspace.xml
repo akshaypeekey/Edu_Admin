@@ -2,13 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="880c67d9-0d0e-41f3-b4d1-19966e255c9f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/enquiry/migrations/0010_auto_20201016_1349.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enquiry/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enquiry/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enquiry/static/css/sb-admin-2.css" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/static/css/sb-admin-2.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enquiry/templates/enq/enq_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/enq/enq_form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enquiry/templates/enq/enq_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/enq/enq_update.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enquiry/templates/enq/enq_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/enq/enq_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enquiry/templates/payments/paymentview.html" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/templates/payments/paymentview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enquiry/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/enquiry/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +37,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/enquiry/templates/enq" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>

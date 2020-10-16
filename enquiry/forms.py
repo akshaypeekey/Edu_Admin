@@ -9,7 +9,7 @@ class EnquiryForm(ModelForm):
     class Meta:
         model = Enquiry
         fields = ['student_name', 'address', 'qualification', 'college', 'course', 'batch_code', 'contact',
-                  'email', 'enquiry_date', 'followup_date', 'status', 'counsellor_name', 'notes']
+                  'email', 'enquiry_date', 'followup_date', 'status', 'counsellor_name', 'notes', 'source']
         widgets = {
             'student_name': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control'}),
@@ -24,6 +24,7 @@ class EnquiryForm(ModelForm):
             'status': forms.Select(attrs={'class': 'form-control'}),
             'counsellor_name': forms.Select(attrs={'class': 'form-control'}),
             'notes': forms.TextInput(attrs={'class': 'form-control'}),
+            'source': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
         def clean(self):
@@ -33,7 +34,8 @@ class EnquiryForm(ModelForm):
 class EnquiryUpdateForm(ModelForm):
     class Meta:
         model = Enquiry
-        fields = ['student_name', 'address', 'qualification', 'college', 'course', 'batch_code', 'contact', 'email', 'enquiry_date', 'followup_date', 'status', 'counsellor_name', 'notes']
+        fields = ['student_name', 'address', 'qualification', 'college', 'course', 'batch_code', 'contact', 'email',
+                  'enquiry_date', 'followup_date', 'status', 'counsellor_name', 'notes', 'source']
         widgets = {
             'student_name': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control'}),
@@ -48,6 +50,7 @@ class EnquiryUpdateForm(ModelForm):
             'status': forms.Select(attrs={'class': 'form-control'}),
             'counsellor_name': forms.Select(attrs={'class': 'form-control'}),
             'notes': forms.TextInput(attrs={'class': 'form-control'}),
+            'source': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
     def clean(self):
